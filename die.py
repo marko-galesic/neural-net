@@ -3,6 +3,10 @@ import board
 class Die:
 	dieInnerTube = []
 	dieVerticalTube = []
+	
+	def __init__(self):
+		print("need to init die")
+
 	def reverseRoll(self, direction):
 		if direction == 'UP':
 			self.roll('DOWN')
