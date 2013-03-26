@@ -5,8 +5,8 @@ class Die:
 	verticalTube = []
 	
 	def __init__(self):
-		self.innerTube = ['5','1','2','6']
-		self.verticalTube = ['3','1','4','6']
+		self.innerTube = [5,1,2,6]
+		self.verticalTube = [3,1,4,6]
 
 	def reverseRoll(self, direction):
 		if direction == 'UP':
@@ -31,6 +31,7 @@ class Die:
 		# Functionally
 		# Left '=' Up	
 		# Down '=' Right
+		print("Tubes\n" + str(self.dieInnerTube) + "\n" + str(self.dieVerticalTube))
 		if ( direction == "RIGHT" ):
 			self.innerTube.insert( self.innerTube.pop(), 0 )
 			self.verticalTube[1] = self.innerTube[1]
