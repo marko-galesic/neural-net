@@ -8,6 +8,6 @@ class Game:
 	position = None
 
 	def __init__(self,file):
-		self.die = Die()						# Die our pet ai will play with
+		self.die = Die()				# Die our pet ai will play with
 		self.board = Board(file)		# Game board our pet ai will play with
 		self.position = []				# Cartesian position of die

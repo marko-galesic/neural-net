@@ -8,7 +8,7 @@ class RollingDieAutomaton:
 	
 	def __init__(self, aFileForTheBoard):
 		gameBoardFile = aFileForTheBoard
-		game = Game(gameBoardFile)
+		game = Game(self.gameBoardFile)
 		
 	# Implementation of A*
 	#def solveThePuzzle():
@@ -19,7 +19,7 @@ class RollingDieAutomaton:
 		self.showGraph(gameDemo, depth)
 
 	def showGraph(self, game, depth):
-		# Draw current game state
+		# Draw current game states
 		# CODE FOR THAT HERE #
 		actions = self.stateActions(game.board, game.die, game.position)
 		
@@ -55,10 +55,10 @@ class RollingDieAutomaton:
 		return [yCoord, xCoord]
 		
 	def reverse(self,position, direction):
-		dirMovement(position, direction, True)
+		self.dirMovement(position, direction, True)
 			
 	def moveForward(self,position, direction):
-		dirMovement(position, direction, False)
+		self.dirMovement(position, direction, False)
 		
 	def dirMovement(self,position, direction, reverse):
 		if direction == 'UP':
@@ -79,13 +79,13 @@ class RollingDieAutomaton:
 		die.roll(direction)
 		
 		# Change game state
-		moveForward(position, direction)
+		self.moveForward(position, direction)
 	def rollback(self,die, position, direction):
 		# Modify die state
 		die.reverseRoll(direction)
 		
 		# Change game state
-		reverse(position, direction)
+		self.reverse(position, direction)
 		
 	# Checks whether die position is in board space
 	# Returns false if bound check fails
