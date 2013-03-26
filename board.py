@@ -1,13 +1,22 @@
+import sys
+
 class Board:
-	board = None
+	board = []
 	yRange = 0
 	xRange = 0
-	def __init__(self, file):
-		self.board = self.parse(file)
+	def __init__(self, maze):
+		self.board = self.parse(maze)
 		
 	# Parse a file and return a board 
-	def parse(self,file):
-		print("This will parse the board")	
+	def parse(self,maze):
+		mazeBoard = open(maze,'r')
+		for line in mazeBoard:
+			loc = 0
+			column = []
+			while loc < len(line):
+				column += line[loc]
+				loc += 1
+			self.board.append(column)
 
 	def boardDisplay(self):
 		for y in xrange(yRange + 1):

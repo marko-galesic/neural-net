@@ -2,13 +2,13 @@ import copy
 from game import Game
 
 class RollingDieAutomaton:
-	game 			= None
-	gameBoardFile 	= None
+	game = None
+	gameBoardFile = None
 	DIRECTIONS 	= ['UP','DOWN','LEFT','RIGHT']	# Direction enumeration
 	
 	def __init__(self, aFileForTheBoard):
-		gameBoardFile = aFileForTheBoard
-		game = Game(gameBoardFile)
+		self.gameBoardFile = aFileForTheBoard
+		game = Game(self.gameBoardFile)
 		
 	# Implementation of A*
 	#def solveThePuzzle():
@@ -55,12 +55,13 @@ class RollingDieAutomaton:
 		return [yCoord, xCoord]
 		
 	def reverse(self,position, direction):
-		dirMovement(position, direction, True)
+		self.dirMovement(position, direction, True)
 			
 	def moveForward(self,position, direction):
-		dirMovement(position, direction, False)
+		self.dirMovement(position, direction, False)
 		
 	def dirMovement(self,position, direction, reverse):
+		print(position)
 		if direction == 'UP':
 			if reverse: position[1] += 1
 			else: 		position[1] -= 1
@@ -79,7 +80,7 @@ class RollingDieAutomaton:
 		die.roll(direction)
 		
 		# Change game state
-		moveForward(position, direction)
+		self.moveForward(position, direction)
 	def rollback(self,die, position, direction):
 		# Modify die state
 		die.reverseRoll(direction)
@@ -99,5 +100,5 @@ class RollingDieAutomaton:
 			else:
 				return False
 
-automaton = RollingDieAutomaton(file)
+automaton = RollingDieAutomaton("Maze1.txt")
 automaton.demo(10)
