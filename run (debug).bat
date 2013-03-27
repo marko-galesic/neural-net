@@ -1,1 +1,2 @@
-python -m pdb DiceRoll.py
+@echo off
+python -m pdb RollingDieAutomaton.py

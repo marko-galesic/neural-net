@@ -19,7 +19,7 @@ class RollingDieAutomaton:
 		self.showGraph(gameDemo, depth)
 
 	def showGraph(self, game, depth):
-		# Draw current game state
+		# Draw current game states
 		# CODE FOR THAT HERE #
 		actions = self.stateActions(game.board, game.die, game.position)
 		print("this : " + str(actions))

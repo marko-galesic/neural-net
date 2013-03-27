@@ -1,13 +1,12 @@
 import board
 
 class Die:
-	dieInnerTube = []
-	dieVerticalTube = []
+	innerTube = []
+	verticalTube = []
 	
 	def __init__(self):
-		self.dieInnerTube = [4,1,3,6]
-		self.dieVerticalTube = [2,1,5,6]
-#		print(self.dieVertivalTube)
+		self.innerTube = [4,1,3,6]
+		self.verticalTube = [2,1,5,6]
 
 	def reverseRoll(self, direction):
 		if direction == 'UP':
@@ -35,23 +34,19 @@ class Die:
 		print("Tubes\n" + str(self.dieInnerTube) + "\n" + str(self.dieVerticalTube))
 		print(direction)
 		if ( direction == "RIGHT" ):
-			self.dieInnerTube.insert( self.dieInnerTube.pop(), 0 )
-			self.dieVerticalTube[1] = self.dieInnerTube[1]
+			self.innerTube.insert( self.innerTube.pop(), 0 )
+			self.verticalTube[1] = self.innerTube[1]
 		if ( direction == "LEFT" ):
-			self.dieInnerTube.append( self.dieInnerTube.pop() )
-			self.dieVerticalTube[1] = self.dieInnerTube[1]
+			self.innerTube.append( self.innerTube.pop(0) )
+			self.verticalTube[1] = self.innerTube[1]
 		if ( direction == "DOWN" ):
-			self.dieVerticalTube.insert( self.dieVerticalTube.pop(), 0 )
-			self.dieInnerTube[1] = self.dieVerticalTube[1]
+			self.verticalTube.insert( self.verticalTube.pop(), 0 )
+			self.innerTube[1] = self.verticalTube[1]
 		if ( direction == "UP" ):
-			print(self.dieVerticalTube.pop())
-			print(self.dieVerticalTube)
-			self.dieVerticalTube.append( self.dieInnerTube.pop() )
-			print(self.dieVerticalTube)
-			self.dieInnerTube[1] = self.dieVerticalTube[1]
-		print("Tubes After\n" + str(self.dieInnerTube) + "\n" + str(self.dieVerticalTube))
-	def sixOnTop(self):
-		if self.dieInnerTube[1] == 6 or self.dieVerticalTube[1] == 6:
+			self.verticalTube.append( self.verticalTube.pop(0) )
+			self.innerTube[1] = self.verticalTube[1]
+	def sixOnTop():
+		if self.innerTube[1] == 6 or self.verticalTube[1] == 6:
 			return True
 		else:
 			return False
