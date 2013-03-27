@@ -19,17 +19,18 @@ class RollingDieAutomaton:
 		self.showGraph(gameDemo, depth)
 
 	def showGraph(self, game, depth):
-		# Draw current game states
-		# CODE FOR THAT HERE #
-		actions = self.stateActions(game.board, game.die, game.position)
-		print("this : " + str(actions))
-		# Go through all actions
-		for action in actions:
-			newState = copy.deepcopy(game)
-			self.act(newState, action)
-			if self.isOnGoal(newState.board, newstate.position):
-				return
-			self.showGraph(newState, depth - 1)
+		if(depth > 0):
+			# Draw current game states
+			# CODE FOR THAT HERE #
+			actions = self.stateActions(game.board, game.die, game.position)
+			# Go through all actions
+	
+			for action in actions:
+				newState = copy.deepcopy(game)
+				self.act(newState, action)
+				if self.isOnGoal(newState.board, newState.position):
+					return True
+				self.showGraph(newState, depth - 1)
 		
 	def act(self,game, action):
 		self.rollDie(game.die, game.position, action)
@@ -39,14 +40,14 @@ class RollingDieAutomaton:
 		return board.isBarrier(self.boardSpace(position))
 	
 	def isOnGoal(self,board, position):
-		return board.isGoal(boardSpace(position))
+		return board.isGoal(self.boardSpace(position))
 		
 	# Returns all actions relevant from current state (read relevant = valid)
 	def stateActions(self,board, die, position):
 		actions = []
 		for dir in self.DIRECTIONS:
 			self.rollDie(die, position, dir)
-			if not (die.sixOnTop() or self.isInBounds(board, position) or self.isOnBarrier(board, position)):
+			if ((not die.sixOnTop()) and self.isInBounds(board, position) and (not self.isOnBarrier(board, position))):
 				actions.append(dir)
 			self.rollback(die, position, dir)
 		return actions
@@ -62,10 +63,9 @@ class RollingDieAutomaton:
 		self.dirMovement(position, direction, False)
 		
 	def dirMovement(self,position, direction, reverse):
-		print(position)
 		if direction == 'UP':
 			if reverse: position[1] += 1
-			else: 		position[1] -= 1
+			else:		position[1] -= 1
 		elif direction == 'DOWN':
 			if reverse:	position[1] -= 1
 			else: 		position[1] += 1
@@ -75,7 +75,6 @@ class RollingDieAutomaton:
 		elif direction == 'RIGHT':
 			if reverse: position[0] -= 1
 			else:		position[0] += 1
-	
 	def rollDie(self,die, position, direction):
 		# Modify die state
 		die.roll(direction)
@@ -94,10 +93,11 @@ class RollingDieAutomaton:
 	# Returns false if bound check fails
 	def isInBounds(self,board, position):
 			self.positionInBoardSpace = self.boardSpace(position)
-			if 	(self.positionInBoardSpace[0] <= board.yRange 	and 
-				self.positionInBoardSpace[0] >= 0				and
-				self.positionInBoardSpace[1] <= board.xRange 	and 
-				self.positionInBoardSpace[1] >= 0):
+			spot = self.boardSpace(position)
+			if(spot[1] <= len(board.board) 	and 
+				spot[1] >= 0				and
+				spot[0] <= len(board.board[spot[1]]) 	and 
+				spot[0] >= 0):
 				return True
 			else:
 				return False

@@ -31,7 +31,7 @@ class Die:
 		# Functionally
 		# Left '=' Up	
 		# Down '=' Right
-		print("Tubes\n" + str(self.dieInnerTube) + "\n" + str(self.dieVerticalTube))
+
 		if ( direction == "RIGHT" ):
 			self.innerTube.insert( self.innerTube.pop(), 0 )
 			self.verticalTube[1] = self.innerTube[1]
@@ -44,7 +44,7 @@ class Die:
 		if ( direction == "UP" ):
 			self.verticalTube.append( self.verticalTube.pop(0) )
 			self.innerTube[1] = self.verticalTube[1]
-	def sixOnTop():
+	def sixOnTop(self):
 		if self.innerTube[1] == 6 or self.verticalTube[1] == 6:
 			return True
 		else:
