@@ -32,7 +32,6 @@ class Die:
 		# Left '=' Up	
 		# Down '=' Right
 		print("Tubes\n" + str(self.dieInnerTube) + "\n" + str(self.dieVerticalTube))
-		print(direction)
 		if ( direction == "RIGHT" ):
 			self.innerTube.insert( self.innerTube.pop(), 0 )
 			self.verticalTube[1] = self.innerTube[1]
