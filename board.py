@@ -29,9 +29,9 @@ class Board:
 				if(s != "\n"):
 					column.append(s)
 				loc += 1
-				xRange = len(line)
+				self.xRange = len(line)
 			self.board.append(column)
-		yRange = len(self.board)
+		self.yRange = len(self.board)
 	
 	def getStart(self):
 		y = 0
@@ -39,7 +39,7 @@ class Board:
 			x = 0
 			while x < len(self.board[y]):
 				if self.board[y][x] == 'START':
-					return [y,x]
+					return self.board[y][x]
 				x+= 1
 			y += 1
 
@@ -47,7 +47,7 @@ class Board:
 		for y in xrange(self.yRange + 1):
 			for x in xrange(self.xRange + 1):
 				if self.board[y][x] == 'GOAL':
-					return [y][x]
+					return self.board[y][x]
 	def boardDisplay(self):
 		y = 0
 		board = self.board
