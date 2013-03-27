@@ -46,7 +46,7 @@ class RollingDieAutomaton:
 		actions = []
 		for dir in self.DIRECTIONS:
 			self.rollDie(die, position, dir)
-			if not (die.sixOnTop() or self.isInBounds(board, position) or self.isOnBarrier(board, position)):
+			if not (die.sixOnTop() or self.isNotInBounds(board, position) or self.isOnBarrier(board, position)):
 				actions.append(dir)
 			self.rollback(die, position, dir)
 		return actions
@@ -92,15 +92,15 @@ class RollingDieAutomaton:
 		
 	# Checks whether die position is in board space
 	# Returns false if bound check fails
-	def isInBounds(self,board, position):
+	def isNotInBounds(self,board, position):
 			self.positionInBoardSpace = self.boardSpace(position)
 			if 	(self.positionInBoardSpace[0] <= board.yRange 	and 
 				self.positionInBoardSpace[0] >= 0				and
 				self.positionInBoardSpace[1] <= board.xRange 	and 
 				self.positionInBoardSpace[1] >= 0):
-				return True
-			else:
 				return False
+			else:
+				return True
 
 automaton = RollingDieAutomaton("Maze1.txt")
 automaton.demo(10)
