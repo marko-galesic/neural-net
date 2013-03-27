@@ -5,6 +5,7 @@ class RollingDieAutomaton:
 	game = None
 	gameBoardFile = None
 	DIRECTIONS 	= ['UP','DOWN','LEFT','RIGHT']	# Direction enumeration
+	savedStates = []
 	
 	def __init__(self, aFileForTheBoard):
 		self.gameBoardFile = aFileForTheBoard
@@ -18,23 +19,25 @@ class RollingDieAutomaton:
 
 	def showGraph(self, game, depth):
 		if(depth > 0):
-			print(game.die.innerTube)
-			print(game.die.verticalTube)
 			# Draw current game states
 			# CODE FOR THAT HERE #
+			game.board.resetBoard(game.position,game.die,"NONE")
 			actions = self.stateActions(game.board, game.die, game.position)
 			# Go through all actions
 			for action in actions:
+				print("In for loop")
 				newState = copy.deepcopy(game)
 				self.act(newState, action)
 				if self.isOnGoal(newState.board, newState.position):
 					return True
-				self.showGraph(newState, depth - 1)
-				print(newState.die.innerTube)
-				print(newState.die.verticalTube)
+				self.savedStates.append([game.position,game.die])
+				#newState.board.resetBoard(game.position,game.die,action)
 				newState.board.boardDisplay()
+				self.showGraph(newState, depth - 1)
+
 	def act(self,game, action):
 		self.rollDie(game.die, game.position, action)
+		game.board.updateBoard(game.position,game.die)
 		
 	# Returns whether or not the die is on a barrier on the game board
 	def isOnBarrier(self,board, position):
@@ -42,13 +45,19 @@ class RollingDieAutomaton:
 	
 	def isOnGoal(self,board, position):
 		return board.isGoal(self.boardSpace(board, position))
+
+	def beenToState(self,die,position):
+		for state in self.savedStates:
+			if(state[0] == position and die.innerTube == state[1].innerTube and die.verticalTube == state[1].verticalTube):
+				return False
+		return True
 		
 	# Returns all actions relevant from current state (read relevant = valid)
 	def stateActions(self,board, die, position):
 		actions = []
 		for dir in self.DIRECTIONS:
 			self.rollDie(die, position, dir)
-			if ((not die.sixOnTop()) and self.isInBounds(board, position) and (not self.isOnBarrier(board, position))):
+			if ((self.beenToState(die,position) and not die.sixOnTop()) and self.isInBounds(board, position) and (not self.isOnBarrier(board, position))):
 				actions.append(dir)
 			self.rollback(die, position, dir)
 		return actions

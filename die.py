@@ -33,22 +33,18 @@ class Die:
 		# Down '=' Right
 		
 		if ( direction == "RIGHT" ):
-			print("Right")
 			self.innerTube.insert(0, self.innerTube.pop() )
 			self.verticalTube[1] = self.innerTube[1]
 			self.verticalTube[3] = self.innerTube[3]
 		if ( direction == "LEFT" ):
-			print("Left")
 			self.innerTube.append( self.innerTube.pop(0) )
 			self.verticalTube[1] = self.innerTube[1]
 			self.verticalTube[3] = self.innerTube[3]
 		if ( direction == "DOWN" ):
-			print("Down")
 			self.verticalTube.insert(0, self.verticalTube.pop() )
 			self.innerTube[1] = self.verticalTube[1]
 			self.innerTube[3] = self.verticalTube[3]
 		if ( direction == "UP" ):
-			print("UP")
 			self.verticalTube.append( self.verticalTube.pop(0) )
 			self.innerTube[1] = self.verticalTube[1]
 			self.innerTube[3] = self.verticalTube[3]
