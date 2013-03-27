@@ -24,7 +24,6 @@ class RollingDieAutomaton:
 			# CODE FOR THAT HERE #
 			actions = self.stateActions(game.board, game.die, game.position)
 			# Go through all actions
-	
 			for action in actions:
 				newState = copy.deepcopy(game)
 				self.act(newState, action)
