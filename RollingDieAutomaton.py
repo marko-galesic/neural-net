@@ -62,7 +62,7 @@ class RollingDieAutomaton:
 	def moveForward(self,position, direction):
 		self.dirMovement(position, direction, False)
 		
-	def dirMovement(self,position, direction, reverse):
+	def dirMovement(self, position, direction, reverse):
 		if direction == 'UP':
 			if reverse: position[1] += 1
 			else:		position[1] -= 1
