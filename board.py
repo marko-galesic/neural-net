@@ -39,7 +39,7 @@ class Board:
 			x = 0
 			while x < len(self.board[y]):
 				if self.board[y][x] == 'START':
-					return [y, x]
+					return [y,x]
 				x+= 1
 			y += 1
 
@@ -51,28 +51,48 @@ class Board:
 	def boardDisplay(self):
 		y = 0
 		board = self.board
+		print("------------")
 		while y < len(board):
 			x = 0
 			while x < len(board[y]):
 				if board[y][x] == 'START':
 					sys.stdout.write('S')
-				if self.board[y][x] == 'OPEN':
+				elif self.board[y][x] == 'OPEN':
 					sys.stdout.write('.')
-				if self.board[y][x] == 'GOAL':
+				elif self.board[y][x] == 'GOAL':
 					sys.stdout.write('G')
-				if self.board[y][x] == 'BARRIER':
+				elif self.board[y][x] == 'BARRIER':
 					sys.stdout.write('*')
+				else:
+					sys.stdout.write(str(self.board[y][x]))
 				x+=1
 			y += 1
 			sys.stdout.write('\n')
 			
 	def isBarrier(self,position):
-		print "Y: " + str(position[1])
-		print "X: " + str(position[0])
-		if self.board[position[0]][position[1]] == 'BARRIER':
+		if self.board[position[1]][position[0]] == 'BARRIER':
 			return True
 		return False
 	def isGoal(self,position):
-		if self.board[position[0]][position[1]] == 'GOAL':
+		if self.board[position[1]][position[0]] == 'GOAL':
 			return True	
 		return False
+
+	def updateBoard(self,position,die):
+		loc = position[1]
+		self.board[position[0]].pop(position[1])
+		self.board[position[0]].insert(loc, die.innerTube[1])
+
+	def resetBoard(self,position,die,action):
+		print(self.board)
+		if(action == "UP"):
+			position[1] -= 1 
+		elif(action == "DOWN"):
+			position[1] += 1
+		elif(action == "RIGHT"):
+			position[0] += 1
+		elif(action == "LEFT"):
+			position[0] -= 1
+		self.board[position[0]].pop(position[1])
+		self.board[position[0]].insert(position[1],"OPEN")
+		print(self.board)

@@ -31,19 +31,24 @@ class Die:
 		# Functionally
 		# Left '=' Up	
 		# Down '=' Right
-
+		
 		if ( direction == "RIGHT" ):
-			self.innerTube.insert( self.innerTube.pop(), 0 )
+			self.innerTube.insert(0, self.innerTube.pop() )
 			self.verticalTube[1] = self.innerTube[1]
+			self.verticalTube[3] = self.innerTube[3]
 		if ( direction == "LEFT" ):
 			self.innerTube.append( self.innerTube.pop(0) )
 			self.verticalTube[1] = self.innerTube[1]
+			self.verticalTube[3] = self.innerTube[3]
 		if ( direction == "DOWN" ):
-			self.verticalTube.insert( self.verticalTube.pop(), 0 )
+			self.verticalTube.insert(0, self.verticalTube.pop() )
 			self.innerTube[1] = self.verticalTube[1]
+			self.innerTube[3] = self.verticalTube[3]
 		if ( direction == "UP" ):
 			self.verticalTube.append( self.verticalTube.pop(0) )
 			self.innerTube[1] = self.verticalTube[1]
+			self.innerTube[3] = self.verticalTube[3]
+			
 	def sixOnTop(self):
 		if self.innerTube[1] == 6 or self.verticalTube[1] == 6:
 			return True
