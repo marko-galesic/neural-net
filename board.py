@@ -5,7 +5,7 @@ class Board:
 	yRange = 0
 	xRange = 0
 	def __init__(self, maze):
-		self.board = self.parse(maze)
+		self.parse(maze)
 		
 	# Parse a file and return a board 
 	def parse(self,maze):
@@ -32,8 +32,18 @@ class Board:
 			sys.stdout.write('\n')
 			
 	def isBarrier(self,position):
-		if board[position[0]][position[1]] == 'BARRIER':
+		if self.board[position[0]][position[1]] == 'BARRIER':
 			return True
 	def isGoal(self,position):
-		if board[position[0]][position[1]] == 'GOAL':
+		if self.board[position[0]][position[1]] == 'GOAL':
 			return True
+	
+	def findStart(self):
+		col = 0
+		for column in self.board:
+			row = 0
+			for tile in column:
+				if (tile == "S"):
+					return [row,col]
+				row +=1
+			col += 1	

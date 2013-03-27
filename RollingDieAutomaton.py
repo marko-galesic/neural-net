@@ -22,21 +22,21 @@ class RollingDieAutomaton:
 		# Draw current game state
 		# CODE FOR THAT HERE #
 		actions = self.stateActions(game.board, game.die, game.position)
-		
+		print("this : " + str(actions))
 		# Go through all actions
 		for action in actions:
 			newState = copy.deepcopy(game)
-			act(newState, action)
-			if isOnGoal(newState.board, newstate.position):
+			self.act(newState, action)
+			if self.isOnGoal(newState.board, newstate.position):
 				return
-			showGraph(newState, depth - 1)
+			self.showGraph(newState, depth - 1)
 		
 	def act(self,game, action):
-		rollDie(game.die, game.position, action)
+		self.rollDie(game.die, game.position, action)
 		
 	# Returns whether or not the die is on a barrier on the game board
 	def isOnBarrier(self,board, position):
-		return board.isBarrier(boardSpace(position))
+		return board.isBarrier(self.boardSpace(position))
 	
 	def isOnGoal(self,board, position):
 		return board.isGoal(boardSpace(position))
@@ -46,12 +46,13 @@ class RollingDieAutomaton:
 		actions = []
 		for dir in self.DIRECTIONS:
 			self.rollDie(die, position, dir)
-			if not (die.sixOnTop() or isInBounds(board, position) or isOnBarrier(board, position)):
+			if not (die.sixOnTop() or self.isInBounds(board, position) or self.isOnBarrier(board, position)):
 				actions.append(dir)
-			rollback(die, position, dir)
+			self.rollback(die, position, dir)
+		return actions
 	def boardSpace(self,position):
 		xCoord = position[0]
-		yCoord = ( position[1] - yRange ) * -1
+		yCoord = position[1]
 		return [yCoord, xCoord]
 		
 	def reverse(self,position, direction):
@@ -81,21 +82,22 @@ class RollingDieAutomaton:
 		
 		# Change game state
 		self.moveForward(position, direction)
+
 	def rollback(self,die, position, direction):
 		# Modify die state
 		die.reverseRoll(direction)
 		
 		# Change game state
-		reverse(position, direction)
+		self.reverse(position, direction)
 		
 	# Checks whether die position is in board space
 	# Returns false if bound check fails
 	def isInBounds(self,board, position):
-			positionInBoardSpace = boardSpace(position)
-			if 	(positionInBoardSpace[0] <= board.yRange 	and 
-				positionInBoardSpace[0] >= 0				and
-				positionInBoardSpace[1] <= board.xRange 	and 
-				positionInBoardSpace[1] >= 0):
+			self.positionInBoardSpace = self.boardSpace(position)
+			if 	(self.positionInBoardSpace[0] <= board.yRange 	and 
+				self.positionInBoardSpace[0] >= 0				and
+				self.positionInBoardSpace[1] <= board.xRange 	and 
+				self.positionInBoardSpace[1] >= 0):
 				return True
 			else:
 				return False

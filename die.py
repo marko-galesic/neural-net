@@ -5,8 +5,8 @@ class Die:
 	dieVerticalTube = []
 	
 	def __init__(self):
-		self.dieInnerTube = [2,1,5,6]
-		self.dieVerticalTube = [4,1,3,6]
+		self.dieInnerTube = [4,1,3,6]
+		self.dieVerticalTube = [2,1,5,6]
 #		print(self.dieVertivalTube)
 
 	def reverseRoll(self, direction):
@@ -33,6 +33,7 @@ class Die:
 		# Left '=' Up	
 		# Down '=' Right
 		print("Tubes\n" + str(self.dieInnerTube) + "\n" + str(self.dieVerticalTube))
+		print(direction)
 		if ( direction == "RIGHT" ):
 			self.dieInnerTube.insert( self.dieInnerTube.pop(), 0 )
 			self.dieVerticalTube[1] = self.dieInnerTube[1]
@@ -43,10 +44,14 @@ class Die:
 			self.dieVerticalTube.insert( self.dieVerticalTube.pop(), 0 )
 			self.dieInnerTube[1] = self.dieVerticalTube[1]
 		if ( direction == "UP" ):
+			print(self.dieVerticalTube.pop())
+			print(self.dieVerticalTube)
 			self.dieVerticalTube.append( self.dieInnerTube.pop() )
+			print(self.dieVerticalTube)
 			self.dieInnerTube[1] = self.dieVerticalTube[1]
-	def sixOnTop():
-		if self.innerTube[1] == 6 or self.verticalTube[1] == 6:
+		print("Tubes After\n" + str(self.dieInnerTube) + "\n" + str(self.dieVerticalTube))
+	def sixOnTop(self):
+		if self.dieInnerTube[1] == 6 or self.dieVerticalTube[1] == 6:
 			return True
 		else:
 			return False
