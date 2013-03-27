@@ -8,18 +8,18 @@ class RollingDieAutomaton:
 	
 	def __init__(self, aFileForTheBoard):
 		self.gameBoardFile = aFileForTheBoard
-		game = Game(self.gameBoardFile)
+		self.game = Game(self.gameBoardFile)
 		
 	# Implementation of A*
 	#def solveThePuzzle():
 	
 	def demo(self, depth):
-		gameDemo = Game(self.gameBoardFile)
-		
-		self.showGraph(gameDemo, depth)
+		self.showGraph(self.game, depth)
 
 	def showGraph(self, game, depth):
 		if(depth > 0):
+			print(game.die.innerTube)
+			print(game.die.verticalTube)
 			# Draw current game states
 			# CODE FOR THAT HERE #
 			actions = self.stateActions(game.board, game.die, game.position)
@@ -30,7 +30,9 @@ class RollingDieAutomaton:
 				if self.isOnGoal(newState.board, newState.position):
 					return True
 				self.showGraph(newState, depth - 1)
-		
+				print(newState.die.innerTube)
+				print(newState.die.verticalTube)
+				newState.board.boardDisplay()
 	def act(self,game, action):
 		self.rollDie(game.die, game.position, action)
 		
@@ -52,7 +54,9 @@ class RollingDieAutomaton:
 		return actions
 	def boardSpace(self, board, position):
 		xCoord = position[0]
-		yCoord = (position[1] - board.yRange) * -1
+		yCoord = position[1]
+		#yCoord = (position[1] - board.yRange) * -1
+		#print("<> " + str(xCoord) + str(yCoord))
 		return [yCoord, xCoord]
 		
 	def reverse(self,position, direction):
@@ -102,4 +106,4 @@ class RollingDieAutomaton:
 				return False
 
 automaton = RollingDieAutomaton("Maze1.txt")
-automaton.demo(10)
+automaton.demo(1)

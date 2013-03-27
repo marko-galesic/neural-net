@@ -13,6 +13,7 @@ class Board:
 	# Parse a file and return a board 
 	def parse(self,maze):
 		mazeBoard = open(maze,'r')
+		print(mazeBoard)
 		for line in mazeBoard:
 			loc = 0
 			column = []
@@ -39,7 +40,7 @@ class Board:
 			x = 0
 			while x < len(self.board[y]):
 				if self.board[y][x] == 'START':
-					return self.board[y][x]
+					return [y,x]
 				x+= 1
 			y += 1
 
@@ -67,8 +68,6 @@ class Board:
 			sys.stdout.write('\n')
 			
 	def isBarrier(self,position):
-		print "Y: " + str(position[1])
-		print "X: " + str(position[0])
 		if self.board[position[0]][position[1]] == 'BARRIER':
 			return True
 		return False
