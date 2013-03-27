@@ -8,8 +8,8 @@ class Board:
 	goalPosition = [1,1]
 	def __init__(self, maze):
 		self.parse(maze)
-		startPosition = self.getStart()
-		goalPosition = self.getGoal()
+		self.startPosition = self.getStart()
+		self.goalPosition = self.getGoal()
 	# Parse a file and return a board 
 	def parse(self,maze):
 		mazeBoard = open(maze,'r')
@@ -40,24 +40,31 @@ class Board:
 					return [y,x]
 				x+= 1
 			y += 1
+
 	def getGoal(self):
 		for y in xrange(self.yRange + 1):
 			for x in xrange(self.xRange + 1):
 				if self.board[y][x] == 'GOAL':
 					return [y][x]
 	def boardDisplay(self):
+<<<<<<< HEAD
 		y = 0
 		board = self.board
 		while y < len(board):
 			x = 0
 			while x < len(board[y]):
 				if board[y][x] == 'START':
+=======
+		for y in xrange(self.yRange + 1):
+			for x in xrange(self.xRange + 1):
+				if self.board[y][x] == 'START':
+>>>>>>> 4c92e95524c8f57da6d0426c146f0195852a2fe9
 					sys.stdout.write('S')
-				if board[y][x] == 'OPEN':
+				if self.board[y][x] == 'OPEN':
 					sys.stdout.write('.')
-				if board[y][x] == 'GOAL':
+				if self.board[y][x] == 'GOAL':
 					sys.stdout.write('G')
-				if board[y][x] == 'BARRIER':
+				if self.board[y][x] == 'BARRIER':
 					sys.stdout.write('*')
 				x+=1
 			y += 1
