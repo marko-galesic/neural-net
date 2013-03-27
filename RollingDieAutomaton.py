@@ -51,10 +51,6 @@ class RollingDieAutomaton:
 				actions.append(dir)
 			self.rollback(die, position, dir)
 		return actions
-	def boardSpace(self, board, position):
-		xCoord = position[0]
-		yCoord = (position[1] - board.yRange) * -1
-		return [yCoord, xCoord]
 		
 	def reverse(self,position, direction):
 		self.dirMovement(position, direction, True)
@@ -63,6 +59,7 @@ class RollingDieAutomaton:
 		self.dirMovement(position, direction, False)
 		
 	def dirMovement(self, position, direction, reverse):
+		print position
 		if direction == 'UP':
 			if reverse: position[1] += 1
 			else:		position[1] -= 1
