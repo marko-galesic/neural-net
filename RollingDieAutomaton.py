@@ -5,6 +5,7 @@ class RollingDieAutomaton:
 	game = None
 	gameBoardFile = None
 	DIRECTIONS 	= ['UP','DOWN','LEFT','RIGHT']	# Direction enumeration
+	nextStates = []
 	savedStates = []
 	
 	def __init__(self, aFileForTheBoard):
@@ -21,19 +22,42 @@ class RollingDieAutomaton:
 		if(depth > 0):
 			# Draw current game states
 			# CODE FOR THAT HERE #
-			game.board.resetBoard(game.position,game.die,"NONE")
-			actions = self.stateActions(game.board, game.die, game.position)
-			# Go through all actions
+			#game.board.resetBoard(game.position,game.die,"NONE")
+			temp = copy.deepcopy(game)
+			actions = self.stateActions(temp.board, temp.die, temp.position)
+			#game.board.boardDisplay()
+			newActions = []
 			for action in actions:
-				print("In for loop")
-				newState = copy.deepcopy(game)
-				self.act(newState, action)
-				if self.isOnGoal(newState.board, newState.position):
-					return True
-				self.savedStates.append([game.position,game.die])
-				#newState.board.resetBoard(game.position,game.die,action)
-				newState.board.boardDisplay()
-				self.showGraph(newState, depth - 1)
+				tempState = Game()
+				
+				self.act(tempState,action)
+				tempState.board.boardDisplay()
+				newAction = [tempState.position,tempState.die]
+				inAction = False
+				for act in self.savedStates:
+					if (act == action):
+						inAction = True
+						break
+				for act in self.nextStates:
+					if(act[0] == action):
+						inAction = True
+						break
+				if (not inAction):
+					#game.board.boardDisplay()
+					newActions.append([newAction,copy.deepcopy(game)])
+			self.nextStates.extend(newActions)
+			#self.nextStates[0][1].board.boardDisplay()
+			# Go through all actions
+			nextState = self.nextStates[0]
+			self.act(nextState[1], nextState[0])
+			self.nextStates.pop(0)
+			print("?")
+			if self.isOnGoal(nextState[1].board, nextState[1].position):
+				return True
+			self.savedStates.append([nextState[1].position,nextState[1].die])
+			#newState.board.resetBoard(game.position,game.die,action)
+			#nextState[1].board.boardDisplay()
+			self.showGraph(nextState, depth - 1)
 
 	def act(self,game, action):
 		self.rollDie(game.die, game.position, action)
@@ -114,5 +138,6 @@ class RollingDieAutomaton:
 			else:
 				return False
 
-automaton = RollingDieAutomaton("Maze1.txt")
+automaton = RollingDieAutomaton()
+automation.setUpBoard1("Maze1.txt")
 automaton.demo(1)
