@@ -7,9 +7,12 @@ class Board:
 	startPosition = [0,0]
 	goalPosition = [1,1]
 	def __init__(self, maze):
-		self.parse(maze)
-		self.startPosition = self.getStart()
-		self.goalPosition = self.getGoal()
+		if(type(maze) == type([])):
+			self.board = maze
+		else:
+			self.parse(maze)
+			self.startPosition = self.getStart()
+			self.goalPosition = self.getGoal()
 	# Parse a file and return a board 
 	def parse(self,maze):
 		mazeBoard = open(maze,'r')
@@ -51,7 +54,7 @@ class Board:
 	def boardDisplay(self):
 		y = 0
 		board = self.board
-		print("------------")
+		print("############")
 		while y < len(board):
 			x = 0
 			while x < len(board[y]):
@@ -84,7 +87,6 @@ class Board:
 		self.board[position[0]].insert(loc, die.innerTube[1])
 
 	def resetBoard(self,position,die,action):
-		print(self.board)
 		if(action == "UP"):
 			position[1] -= 1 
 		elif(action == "DOWN"):
@@ -95,4 +97,3 @@ class Board:
 			position[0] -= 1
 		self.board[position[0]].pop(position[1])
 		self.board[position[0]].insert(position[1],"OPEN")
-		print(self.board)
