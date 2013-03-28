@@ -9,9 +9,9 @@ class Game:
 
 	def __init__(self):
 		self.die = Die()				# Die our pet ai will play with
-	def setUpBoard(self,f):
-		self.board = Board(f)		# Game board our pet ai will play with
-		self.position = self.board.getStart()		# Cartesian position of die
+	def setUpBoard(self, fileName):
+		self.board = Board(fileName)										# Game board our pet ai will play with
+		self.position = playerSpace(self.board, self.board.getStart())		# Cartesian position of die
 
 	def setBoard(board,position):
 		self.board = board
