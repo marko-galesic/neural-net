@@ -1,5 +1,6 @@
 import copy
 from game import Game
+from board import Board
 
 class RollingDieAutomaton:
 	game = None
@@ -10,8 +11,8 @@ class RollingDieAutomaton:
 	
 	def __init__(self, aFileForTheBoard):
 		self.gameBoardFile = aFileForTheBoard
-		self.game = Game(self.gameBoardFile)
-		
+		self.game = Game()
+		self.game.setUpBoard(aFileForTheBoard)
 	# Implementation of A*
 	#def solveThePuzzle():
 	
@@ -23,12 +24,14 @@ class RollingDieAutomaton:
 			# Draw current game states
 			# CODE FOR THAT HERE #
 			#game.board.resetBoard(game.position,game.die,"NONE")
-			temp = copy.deepcopy(game)
-			actions = self.stateActions(temp.board, temp.die, temp.position)
+			#temp = self.gameCopy(game)
+			actions = self.stateActions(game.board, game.die, game.position)
 			#game.board.boardDisplay()
 			newActions = []
+			
+			print("This should return something " + str(actions))
 			for action in actions:
-				tempState = Game()
+				tempState = self.gameCopy(game)
 				
 				self.act(tempState,action)
 				tempState.board.boardDisplay()
@@ -36,10 +39,12 @@ class RollingDieAutomaton:
 				inAction = False
 				for act in self.savedStates:
 					if (act == action):
+						print("A Saved State")
 						inAction = True
 						break
 				for act in self.nextStates:
 					if(act[0] == action):
+						print("Already in nextStates")
 						inAction = True
 						break
 				if (not inAction):
@@ -48,16 +53,23 @@ class RollingDieAutomaton:
 			self.nextStates.extend(newActions)
 			#self.nextStates[0][1].board.boardDisplay()
 			# Go through all actions
+			
 			nextState = self.nextStates[0]
 			self.act(nextState[1], nextState[0])
 			self.nextStates.pop(0)
-			print("?")
 			if self.isOnGoal(nextState[1].board, nextState[1].position):
 				return True
 			self.savedStates.append([nextState[1].position,nextState[1].die])
 			#newState.board.resetBoard(game.position,game.die,action)
 			#nextState[1].board.boardDisplay()
-			self.showGraph(nextState, depth - 1)
+			self.showGraph(nextState[3], depth - 1)
+
+	def gameCopy(self,game):
+		newGame = Game()
+		newBoard = Board(copy.deepcopy(game.board.board))
+		newPosition = game.position[:]
+		newGame.setBoard(newBoard,newPosition)
+		return newGame
 
 	def act(self,game, action):
 		self.rollDie(game.die, game.position, action)
@@ -100,7 +112,6 @@ class RollingDieAutomaton:
 		self.dirMovement(position, direction, False)
 		
 	def dirMovement(self, position, direction, reverse):
-		print position
 		if direction == 'UP':
 			if reverse: position[1] += 1
 			else:		position[1] -= 1
@@ -119,7 +130,7 @@ class RollingDieAutomaton:
 		
 		# Change game state
 		self.moveForward(position, direction)
-
+		
 	def rollback(self,die, position, direction):
 		# Modify die state
 		die.reverseRoll(direction)
@@ -140,6 +151,5 @@ class RollingDieAutomaton:
 			else:
 				return False
 
-automaton = RollingDieAutomaton()
-automation.setUpBoard1("Maze1.txt")
-automaton.demo(1)
+automaton = RollingDieAutomaton("Maze1.txt")
+automaton.demo(2)

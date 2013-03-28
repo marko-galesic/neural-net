@@ -13,6 +13,6 @@ class Game:
 		self.board = Board(f)		# Game board our pet ai will play with
 		self.position = self.board.getStart()		# Cartesian position of die
 
-	def setBoard(board,position):
+	def setBoard(self,board,position):
 		self.board = board
 		self.position = position
