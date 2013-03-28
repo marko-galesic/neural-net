@@ -1,5 +1,6 @@
 from die import Die
 from board import Board
+from manage import *
 
 class Game:
 

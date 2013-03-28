@@ -1,5 +1,5 @@
 import copy
-import manage
+from manage import *
 from game import Game
 from board import Board
 
@@ -78,10 +78,10 @@ class RollingDieAutomaton:
 		
 	# Returns whether or not the die is on a barrier on the game board
 	def isOnBarrier(self,board, position):
-		return board.isBarrier(self.boardSpace(board, position))
+		return board.isBarrier(boardSpace(board, position))
 	
 	def isOnGoal(self,board, position):
-		return board.isGoal(self.boardSpace(board, position))
+		return board.isGoal(boardSpace(board, position))
 
 	def beenToState(self,die,position):
 		for state in self.savedStates:
@@ -135,8 +135,8 @@ class RollingDieAutomaton:
 	# Checks whether die position is in board space
 	# Returns false if bound check fails
 	def isInBounds(self, board, position):
-			self.positionInBoardSpace = self.boardSpace(board, position)
-			spot = self.boardSpace(board, position)
+			self.positionInBoardSpace = boardSpace(board, position)
+			spot = boardSpace(board, position)
 			if(spot[1] < board.yRange 		and 
 				spot[1] >= 0				and
 				spot[0] < board.xRange 	and 
