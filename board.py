@@ -47,7 +47,7 @@ class Board:
 		for y in xrange(self.yRange + 1):
 			for x in xrange(self.xRange + 1):
 				if self.board[y][x] == 'GOAL':
-					return self.board[y][x]
+					return [y, x]
 	def boardDisplay(self):
 		y = 0
 		board = self.board
