@@ -33,33 +33,37 @@ def aStar(state):
 	n = 0
 	while not foundGoal:
 		if (len(nextStates) == 0):
+			print("break")
 			break
 		nextNode = nextStates.pop(0)
 		notValid = haveVisited(nextNode.state,visited)
 		while (notValid):
 			if(len(nextStates) == 0 ):
-#				print("No More States")
+				print("No More States")
 				return False
 			nextNode = nextStates.pop(0)
 			numVisitedNodes += 1
-			print(numVisitedNodes)
+#			print(numVisitedNodes)
 			notValid = haveVisited(nextNode.state,visited)
-		if( [nextNode.state.x,nextNode.state.y] == goal and not state.die[1] == 1):
+		#print("-+ " + str(puzzle[nextNode.state.x][nextNode.state.y]) + "<=>" + str(state.die))
+		#print(puzzle[nextNode.state.x][nextNode.state.y] == "G")
+		if( puzzle[nextNode.state.x][nextNode.state.y] == "G" and state.die[0][1] == 1):
 			foundGoal = True
 			nV = numVisitedNodes + 0
 			print("win")
 			return nextNode.getPathTaken()
 		else:
+			nextNode.getPathTaken()
 			ret = nextNode.getNewNextStates(puzzle,visited,numVisitedNodes,numGeneratedNodes,heuristic)
 			visit = ret[0]
 			visited[nextNode.state] = visit
-			
 			numVisitedNodes = ret[1]
 			numGeneratedNodes = ret[2]
+			#print("_-_-_-_-_-_-")
 			#print(len(ret[3]))
 			#print(len(nextStates))
 			nextStates.extend(ret[3])
-			#print(len(nextStates))
+			
 			#i = 0
 			#while i < len(nextStates):
 			#	j = 0
@@ -74,10 +78,10 @@ def aStar(state):
 			#	i+=1
 			n+=1
 			#print(len(nextStates))
-			if (n > 10001):
-				print(len(nextStates))
-				foundGoal = True
-				return nextNode.getPathTaken()
+#			if (n > 10001):
+#				print(len(nextStates))
+#				foundGoal = True
+#				return nextNode.getPathTaken()
 
 def haveVisited(state,visited):
 	for key in visited.keys():
@@ -128,15 +132,9 @@ def parse(maze):
 		while loc < len(line):
 			s = line[loc]
 			if (s == "S"):
-				s = "START"
 				startState = State(x,loc,[[2,1,5,6],[4,1,3,6]],None)
 			elif(s == "G"):
-				s = "GOAL"
 				goalState = [x,loc]
-			elif(s == "."):
-				s = "OPEN"
-			elif(s =="*"):
-				s = "BARRIOR"
 			if(s != "\n"):
 				column.append(s)
 			loc += 1
