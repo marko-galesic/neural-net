@@ -9,22 +9,21 @@ class GameNode:
 		self.parent = parent
 
 	def getNewNextStates(self,puzzle,visited,numVisitedNodes,numGeneratedNodes,heuristic):
-		visited[self.state] = self.depth
 		numVisitedNodes += 1
 		nextStates = []
 		for neighbor in self.state.neighbors(puzzle):
 			newDepth = self.depth + heuristic(neighbor) + 1
+			#print(neighbor not in visited)
 			if(neighbor not in visited or newDepth < visited[neighbor]):
+				#print("HI " + str(neighbor.action))
 				nextStates.append(GameNode(neighbor,newDepth,self))
 				numGeneratedNodes += 1
-		for state in nextStates:
-			print(state.state.action)
-		return [visited,numVisitedNodes,numGeneratedNodes,nextStates]
+		return [self.depth,numVisitedNodes,numGeneratedNodes,nextStates]
 
 	def getPathTaken(self):
 		path = []
 		currentNode = self
 		while currentNode != None:
-			path.append([currentNode,currentNode.action])
+			path.append([currentNode,currentNode.state.action])
 			currentNode = currentNode.parent
 		return path
