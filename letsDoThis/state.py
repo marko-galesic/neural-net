@@ -15,11 +15,19 @@ class State:
 		return self.validLocation(puzzle,state.x,state.y) and state.die[1] != 6
 
 	def validLocation(self,puzzle,x,y):
+		#print("____________________________")
+		#print([x,len(puzzle)])
+		#print(0 <= x < len(puzzle))
+		#print([y,len(puzzle[0])])
+		#print(0 <= y < len(puzzle[0]))
 		return(0<= x <len(puzzle) 
 				and 0<=y < len(puzzle[0]) 
 				and puzzle[x][y] != "*")
 
 	def neighbors(self,puzzle):
+		#print("In Die")
+		#print(self.die)
+		#print([self.x,self.y])
 		dieVertical = self.die[0][:]
 		dieMiddle = self.die[1][:]
 		
@@ -53,6 +61,11 @@ class State:
 		dieWest[0][1] = dieWest[1][1]
 		x = self.x + 0
 		y = self.y + 0
+
+#		print(dieNorth)
+#		print(dieSouth)
+#		print(dieEast)
+#		print(dieWest)
 		
 		neighbors = [State(x,(y - 1), dieNorth, "N"),
 					State(x,(y + 1), dieSouth, "S"),
@@ -65,4 +78,9 @@ class State:
 				neighbors.pop(s)
 				s -= 1
 			s += 1
+#		print("===================")
+#		for neighbor in neighbors:
+#			print(neighbor.die)
+#			print(neighbor.action)
+#		print("+++++++++++++++++++")
 		return neighbors

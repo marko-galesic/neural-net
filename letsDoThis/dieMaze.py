@@ -3,6 +3,7 @@ import sys
 from node import GameNode
 from state import State
 import math
+import copy
 
 puzzle = []
 goal = None
@@ -22,52 +23,92 @@ def aStar(state):
 	numGeneratedNodes = 0
 	
 	if (state.x,state.y) == goal and state.die[1] == 1:
-		print("at goal state")
 		return True
 	
 	nextStates.append(GameNode(state,0,None))
 
-	visited[state] = 0
-
 	foundGoal = False
+	n = 0
 	while not foundGoal:
 		if (len(nextStates) == 0):
-			print("No new States")
 			break
-		nextNode = None
-		while (not nextNode or nextNode.state in visited and visited[nextNode.state] < nextNode.depth):
+		nextNode = nextStates.pop(0)
+		notValid = haveVisited(nextNode.state,visited)
+		while (notValid):
+			if(len(nextStates) == 0 ):
+#				print("No More States")
+				return False
 			nextNode = nextStates.pop(0)
-		print("Here?")
-		if(nextNode.state.x,nextNode.state.y) == goal and state.die[1] == 1:
+			notValid = haveVisited(nextNode.state,visited)
+		if( [nextNode.state.x,nextNode.state.y] == goal and not state.die[1] == 1):
 			foundGoal = True
-			return nextNode.unwind()
+			print("win")
+			return nextNode.getPathTaken()
 		else:
 			ret = nextNode.getNewNextStates(puzzle,visited,numVisitedNodes,numGeneratedNodes,heuristic)
-			visited = ret[0]
+			visit = ret[0]
+			visited[nextNode.state] = visit
+			
 			numVisitedNodes = ret[1]
 			numGeneratedNodes = ret[2]
-			nextStates.extend(ret[3])		
+			#print(len(ret[3]))
+			#print(len(nextStates))
+			nextStates.extend(ret[3])
+			#print(len(nextStates))
+			#i = 0
+			#while i < len(nextStates):
+			#	j = 0
+			#	while j < len(nextStates):
+			#		if(not i == j):
+			#			if(not (nextStates[i].state.x == nextStates[j].state.x and
+			#				nextStates[i].state.y == nextStates[j].state.y and
+			#				nextStates[i].state.action == nextStates[j].state.action)):
+			#					nextStates.pop(j)
+			#					j-=1
+			#		j+=1
+			#	i+=1
+			n+=1
+			#print(len(nextStates))
+			if (n > 10001):
+				print(len(nextStates))
+				foundGoal = True
+				return nextNode.getPathTaken()
+
+def haveVisited(state,visited):
+	for key in visited.keys():
+		#print("Have Visited")
+		#print([key.die,key.x,key.y])
+		#print("Current Visit")
+		#print([state.die,state.x,state.y])
+		if ((key.die == state.die) and 
+			(key.x == state.x) and
+			(key.y == state.y)):	
+			return True
+	#print("False")
+	return False
+
 def strightLineDistance(state):
 	global goal
 	x = (state.x - goal[0])
 	y = (state.y - goal[1])
 	dist = math.sqrt(abs(x*x + y*y))
-	print(dist)
 	return dist
 
 def manhattanDistance(state):
-	return "Todo"
+	return abs((state.x - goal[0])) + abs((state.y - goal[1]))
 
 def dieTurn(state):
-	return "Todo"
+	if(state.die[0][1] == 1):
+		return 1
+	return 0
 
 def results(startState):
-	global numVisitedNode, numGeneratedNode
+	global numVisitedNodes, numGeneratedNodes
 	path = aStar(startState)
-	print(path)
-	for action, newState in path:
-		print("%s => %s" % (action,newState))
-	print("%s visited out of %s generated." % (numVisitedNode, numGeneratedNode))
+	if(not path == False):
+		for newState, action in path:
+			print("%s => [%s,%s]" % (action,newState.state.x,newState.state.y))
+		print("%s visited out of %s generated." % (numVisitedNodes, numGeneratedNodes))
 
 def parse(maze):
 	board = []
@@ -99,21 +140,22 @@ def parse(maze):
 
 def main():
 	global goal, puzzle, heuristic
-	print("Starting maze")
-	print(argv[1])
 	board = parse(argv[1])
 	puzzle = board[0]
 	startState = board[1]
 	goal = board[2]
+	startLine = copy.deepcopy(startState)
+	startBloc = copy.deepcopy(startState)
+	startFlip = copy.deepcopy(startState)
 	print("Straight Line Distance")
 	heuristic = strightLineDistance
-	results(startState)
+	results(startLine)
 	print("Manhattan Distance")
-	heuristic = manhattan_distance
-	results(startState)
+	heuristic = manhattanDistance
+	results(startBloc)
 	print("Die Turn")
 	heuristic = dieTurn
-	presults(stateState)
+	results(startFlip)
 
 if __name__ == "__main__":
 	main()
