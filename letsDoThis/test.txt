@@ -1,0 +1,207 @@
+Straight Line Distance
+win
+S => [0,1]
+None => [0,0]
+0 visited out of 1 generated.
+Manhattan Distance
+win
+S => [0,1]
+None => [0,0]
+0 visited out of 1 generated.
+Die Turn
+win
+S => [0,1]
+None => [0,0]
+0 visited out of 1 generated.
+Straight Line Distance
+win
+S => [0,4]
+S => [0,3]
+S => [0,2]
+S => [0,1]
+None => [0,0]
+0 visited out of 33 generated.
+Manhattan Distance
+win
+S => [0,4]
+S => [0,3]
+S => [0,2]
+S => [0,1]
+None => [0,0]
+0 visited out of 33 generated.
+Die Turn
+win
+S => [0,4]
+S => [0,3]
+S => [0,2]
+S => [0,1]
+None => [0,0]
+0 visited out of 33 generated.
+Straight Line Distance
+win
+E => [2,4]
+E => [1,4]
+S => [0,4]
+S => [0,3]
+S => [0,2]
+S => [0,1]
+None => [0,0]
+0 visited out of 330 generated.
+Manhattan Distance
+win
+E => [2,4]
+E => [1,4]
+S => [0,4]
+S => [0,3]
+S => [0,2]
+S => [0,1]
+None => [0,0]
+0 visited out of 330 generated.
+Die Turn
+win
+E => [2,4]
+E => [1,4]
+S => [0,4]
+S => [0,3]
+S => [0,2]
+S => [0,1]
+None => [0,0]
+0 visited out of 330 generated.
+Straight Line Distance
+win
+E => [4,5]
+E => [3,5]
+E => [2,5]
+E => [1,5]
+S => [0,5]
+S => [0,4]
+S => [0,3]
+S => [0,2]
+S => [0,1]
+None => [0,0]
+0 visited out of 1132 generated.
+Manhattan Distance
+win
+E => [4,5]
+E => [3,5]
+E => [2,5]
+E => [1,5]
+S => [0,5]
+S => [0,4]
+S => [0,3]
+S => [0,2]
+S => [0,1]
+None => [0,0]
+0 visited out of 1132 generated.
+Die Turn
+win
+E => [4,5]
+E => [3,5]
+E => [2,5]
+E => [1,5]
+S => [0,5]
+S => [0,4]
+S => [0,3]
+S => [0,2]
+S => [0,1]
+None => [0,0]
+0 visited out of 1132 generated.
+Straight Line Distance
+win
+N => [0,1]
+N => [0,2]
+N => [0,3]
+None => [0,4]
+0 visited out of 33 generated.
+Manhattan Distance
+win
+N => [0,1]
+N => [0,2]
+N => [0,3]
+None => [0,4]
+0 visited out of 33 generated.
+Die Turn
+win
+N => [0,1]
+N => [0,2]
+N => [0,3]
+None => [0,4]
+0 visited out of 33 generated.
+Straight Line Distance
+win
+E => [11,0]
+E => [10,0]
+E => [9,0]
+E => [8,0]
+E => [7,0]
+E => [6,0]
+E => [5,0]
+E => [4,0]
+E => [3,0]
+E => [2,0]
+E => [1,0]
+N => [0,0]
+N => [0,1]
+N => [0,2]
+N => [0,3]
+N => [0,4]
+N => [0,5]
+N => [0,6]
+N => [0,7]
+N => [0,8]
+N => [0,9]
+N => [0,10]
+None => [0,11]
+0 visited out of 6312 generated.
+Manhattan Distance
+win
+E => [11,0]
+E => [10,0]
+E => [9,0]
+E => [8,0]
+E => [7,0]
+E => [6,0]
+E => [5,0]
+E => [4,0]
+E => [3,0]
+E => [2,0]
+E => [1,0]
+N => [0,0]
+N => [0,1]
+N => [0,2]
+N => [0,3]
+N => [0,4]
+N => [0,5]
+N => [0,6]
+N => [0,7]
+N => [0,8]
+N => [0,9]
+N => [0,10]
+None => [0,11]
+0 visited out of 6312 generated.
+Die Turn
+win
+E => [11,0]
+E => [10,0]
+E => [9,0]
+E => [8,0]
+E => [7,0]
+E => [6,0]
+E => [5,0]
+E => [4,0]
+E => [3,0]
+E => [2,0]
+E => [1,0]
+N => [0,0]
+N => [0,1]
+N => [0,2]
+N => [0,3]
+N => [0,4]
+N => [0,5]
+N => [0,6]
+N => [0,7]
+N => [0,8]
+N => [0,9]
+N => [0,10]
+None => [0,11]
+0 visited out of 6312 generated.
