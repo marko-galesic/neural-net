@@ -93,8 +93,9 @@ class RollingDieAutomaton:
 		actions = []
 		for dir in self.DIRECTIONS:
 			self.rollDie(die, position, dir)
-			print(self.isInBounds(board,position))
+			print(self.isOnBarrier(board,position))
 			if ((not self.beenTo(board,die,position)) and (not die.sixOnTop()) and self.isInBounds(board, position) and (not self.isOnBarrier(board, position))):
+				
 				actions.append(dir)
 			self.rollback(die, position, dir)
 		return actions
@@ -138,9 +139,6 @@ class RollingDieAutomaton:
 	def isInBounds(self, board, position):
 			self.positionInBoardSpace = boardSpace(board, position[0])
 			spot = boardSpace(board, position[0])
-			print(board.yRange)
-			print(board.xRange)
-			print(spot)
 			if(spot[1] < board.yRange 		and 
 				spot[1] >= 0				and
 				spot[0] < board.xRange 	and 
