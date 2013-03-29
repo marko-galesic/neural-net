@@ -21,10 +21,11 @@ class RollingDieAutomaton:
 		self.showGraph(self.game, depth)
 
 	def showGraph(self, game, depth):
-		
+		print(game.board.board)
 		if(self.isOnGoal(game.board,game.position)):
 			return True
-		if(depth > 0):
+		print(depth)
+		if(depth < 2):
 			# Draw current game states
 			# CODE FOR THAT HERE #
 			actions = self.stateActions(game.board, game.die, game.position)
@@ -53,12 +54,20 @@ class RollingDieAutomaton:
 			#	return True
 			#newState.board.resetBoard(game.position,game.die,action)
 			#nextState[1].board.boardDisplay()
-			#self.showGraph(nextState[3], depth - 1)
+			nextState = self.nextStates[0]
+			self.nextStates.pop(0)
+			self.showGraph(nextState, depth + 1)
 
 	def gameCopy(self,game):
 		newGame = Game()
-		newBoard = Board(copy.deepcopy(game.board.board))
-		newPosition = game.position[:]
+		board = game.board
+		newBoard = Board(copy.deepcopy(board.board))
+		x = board.xRange
+		y = board.yRange
+		newBoard.setRange(x,y)
+		loc = game.position[0][:]
+		depth = game.position[1]
+		newPosition = [loc,depth]
 		newGame.setBoard(newBoard,newPosition)
 		return newGame
 
@@ -84,6 +93,7 @@ class RollingDieAutomaton:
 		actions = []
 		for dir in self.DIRECTIONS:
 			self.rollDie(die, position, dir)
+			print(self.isInBounds(board,position))
 			if ((not self.beenTo(board,die,position)) and (not die.sixOnTop()) and self.isInBounds(board, position) and (not self.isOnBarrier(board, position))):
 				actions.append(dir)
 			self.rollback(die, position, dir)
@@ -128,6 +138,9 @@ class RollingDieAutomaton:
 	def isInBounds(self, board, position):
 			self.positionInBoardSpace = boardSpace(board, position[0])
 			spot = boardSpace(board, position[0])
+			print(board.yRange)
+			print(board.xRange)
+			print(spot)
 			if(spot[1] < board.yRange 		and 
 				spot[1] >= 0				and
 				spot[0] < board.xRange 	and 
@@ -137,4 +150,4 @@ class RollingDieAutomaton:
 				return False
 
 automaton = RollingDieAutomaton("Maze1.txt")
-automaton.demo(2)
+automaton.demo(0)

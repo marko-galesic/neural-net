@@ -15,6 +15,11 @@ class Board:
 			self.startPosition = self.getStart()
 			self.goalPosition = self.getGoal()
 	# Parse a file and return a board 
+
+	def setRange(self,x,y):
+		self.xRange = x
+		self.yRange = y
+
 	def parse(self,maze):
 		mazeBoard = open(maze,'r')
 		for line in mazeBoard:
