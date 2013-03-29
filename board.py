@@ -68,7 +68,7 @@ class Board:
 				elif self.board[y][x][0] == 'BARRIER':
 					sys.stdout.write('*')
 				else:
-					sys.stdout.write(str(self.board[y][x]))
+					sys.stdout.write(str(self.board[y][x][0]))
 				x+=1
 			y += 1
 			sys.stdout.write('\n')
@@ -82,11 +82,12 @@ class Board:
 			return True	
 		return False
 
-	def updateBoard(self,position,die):
+	def updateBoard(self,position,die,depth):
 		position = position[0]
-		loc = position[1]
-		self.board[position[0]].pop(position[1])
-		self.board[position[0]].insert(loc, die.innerTube[1])
+		print(self.board[position[0]][position[1]])
+		self.board[position[0]][position[1]].pop(0)
+		self.board[position[0]][position[1]].insert(0, die.innerTube[1])
+		self.board[position[0]][position[1]][1].append([die,depth + 1])
 
 	def resetBoard(self,position,die,action):
 		if(action == "UP"):

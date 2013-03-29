@@ -37,12 +37,12 @@ class RollingDieAutomaton:
 			for action in actions:
 				tempState = self.gameCopy(game)
 				
-				self.act(tempState,action)
+				self.act(tempState,action,depth)
 				
 				inAction = False
 				
 				if (not inAction):
-					#game.board.boardDisplay()
+					tempState.board.boardDisplay()
 					newActions.append(tempState)
 			self.nextStates.extend(newActions)
 			#self.nextStates[0][1].board.boardDisplay()
@@ -64,9 +64,9 @@ class RollingDieAutomaton:
 		newGame.setBoard(newBoard,newPosition)
 		return newGame
 
-	def act(self,game, action):
+	def act(self,game, action,depth):
 		self.rollDie(game.die, game.position, action)
-		game.board.updateBoard(game.position,game.die)
+		game.board.updateBoard(game.position,game.die,depth)
 		
 	# Returns whether or not the die is on a barrier on the game board
 	def isOnBarrier(self,board, position):
