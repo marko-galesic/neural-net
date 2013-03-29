@@ -83,6 +83,7 @@ class Board:
 		return False
 
 	def updateBoard(self,position,die):
+		position = position[0]
 		loc = position[1]
 		self.board[position[0]].pop(position[1])
 		self.board[position[0]].insert(loc, die.innerTube[1])
