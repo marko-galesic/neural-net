@@ -1,6 +1,7 @@
 import sys
 
 class Board:
+	#[State,[die,cost]]
 	board = []
 	yRange = 0
 	xRange = 0
@@ -30,7 +31,7 @@ class Board:
 				elif(s =="*"):
 					s = "BARRIOR"
 				if(s != "\n"):
-					column.append(s)
+					column.append([s,[]])
 				loc += 1
 				self.xRange = len(line)
 			self.board.append(column)
@@ -41,7 +42,7 @@ class Board:
 		while y < len(self.board):
 			x = 0
 			while x < len(self.board[y]):
-				if self.board[y][x] == 'START':
+				if self.board[y][x][0] == 'START':
 					return [y,x]
 				x+= 1
 			y += 1
@@ -49,7 +50,7 @@ class Board:
 	def getGoal(self):
 		for y in xrange(self.yRange + 1):
 			for x in xrange(self.xRange + 1):
-				if self.board[y][x] == 'GOAL':
+				if self.board[y][x][0] == 'GOAL':
 					return [y, x]
 	def boardDisplay(self):
 		y = 0
@@ -58,13 +59,13 @@ class Board:
 		while y < len(board):
 			x = 0
 			while x < len(board[y]):
-				if board[y][x] == 'START':
+				if board[y][x][0] == 'START':
 					sys.stdout.write('S')
-				elif self.board[y][x] == 'OPEN':
+				elif self.board[y][x][0] == 'OPEN':
 					sys.stdout.write('.')
-				elif self.board[y][x] == 'GOAL':
+				elif self.board[y][x][0] == 'GOAL':
 					sys.stdout.write('G')
-				elif self.board[y][x] == 'BARRIER':
+				elif self.board[y][x][0] == 'BARRIER':
 					sys.stdout.write('*')
 				else:
 					sys.stdout.write(str(self.board[y][x]))

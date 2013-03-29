@@ -12,8 +12,8 @@ class Game:
 		self.die = Die()				# Die our pet ai will play with
 	def setUpBoard(self, fileName):
 		self.board = Board(fileName)										# Game board our pet ai will play with
-		self.position = playerSpace(self.board, self.board.getStart())		# Cartesian position of die
-
+		self.position = [playerSpace(self.board, self.board.getStart()),0]		# Cartesian position of die
+		
 	def setBoard(self,board,position):
 		self.board = board
 		self.position = position
