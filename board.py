@@ -84,7 +84,6 @@ class Board:
 
 	def updateBoard(self,position,die,depth):
 		position = position[0]
-		print(self.board[position[0]][position[1]])
 		self.board[position[0]][position[1]].pop(0)
 		self.board[position[0]][position[1]].insert(0, die.innerTube[1])
 		self.board[position[0]][position[1]][1].append([die,depth + 1])

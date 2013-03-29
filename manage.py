@@ -7,5 +7,5 @@ def boardSpace(board, position):
 	
 def playerSpace(board, position):
 	xCoord = position[0]
-	yCoord = (position[1] - board.yRange) * -1
+	yCoord = position[1]
 	return [xCoord, yCoord]

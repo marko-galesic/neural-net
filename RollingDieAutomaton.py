@@ -27,8 +27,6 @@ class RollingDieAutomaton:
 		if(depth > 0):
 			# Draw current game states
 			# CODE FOR THAT HERE #
-			#game.board.resetBoard(game.position,game.die,"NONE")
-			#temp = self.gameCopy(game)
 			actions = self.stateActions(game.board, game.die, game.position)
 			#game.board.boardDisplay()
 			newActions = []
@@ -73,7 +71,6 @@ class RollingDieAutomaton:
 		return board.isBarrier(boardSpace(board, position[0]))
 	
 	def isOnGoal(self,board, position):
-		print(position[0])
 		return board.isGoal(boardSpace(board, position[0]))
 
 	def beenTo(self,board,die,position):
@@ -87,7 +84,6 @@ class RollingDieAutomaton:
 		actions = []
 		for dir in self.DIRECTIONS:
 			self.rollDie(die, position, dir)
-			print(self.isInBounds(board,position))
 			if ((not self.beenTo(board,die,position)) and (not die.sixOnTop()) and self.isInBounds(board, position) and (not self.isOnBarrier(board, position))):
 				actions.append(dir)
 			self.rollback(die, position, dir)
