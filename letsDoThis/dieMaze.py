@@ -13,10 +13,12 @@ nextStates = []
 numVisitedNodes = 0
 numGeneratedNodes = 0
 
+nV = 0
+
 heristic = lambda state: 0
 
 def aStar(state):
-	global puzzle, nextStates, visited, numVisitedNoes, numGeneratedNodes, heuristic
+	global puzzle, nextStates, visited, numVisitedNoes, numGeneratedNodes, heuristic, nV
 	nextStates = []
 	visited = {}
 	numVisitedNodes = 1
@@ -39,9 +41,12 @@ def aStar(state):
 #				print("No More States")
 				return False
 			nextNode = nextStates.pop(0)
+			numVisitedNodes += 1
+			print(numVisitedNodes)
 			notValid = haveVisited(nextNode.state,visited)
 		if( [nextNode.state.x,nextNode.state.y] == goal and not state.die[1] == 1):
 			foundGoal = True
+			nV = numVisitedNodes + 0
 			print("win")
 			return nextNode.getPathTaken()
 		else:
@@ -103,12 +108,13 @@ def dieTurn(state):
 	return 0
 
 def results(startState):
-	global numVisitedNodes, numGeneratedNodes
+	global numGeneratedNodes
 	path = aStar(startState)
+	global nV
 	if(not path == False):
 		for newState, action in path:
 			print("%s => [%s,%s]" % (action,newState.state.x,newState.state.y))
-		print("%s visited out of %s generated." % (numVisitedNodes, numGeneratedNodes))
+		print("%s visited out of %s generated." % (nV, numGeneratedNodes))
 
 def parse(maze):
 	board = []
