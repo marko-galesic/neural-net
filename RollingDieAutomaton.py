@@ -21,11 +21,9 @@ class RollingDieAutomaton:
 		self.showGraph(self.game, depth)
 
 	def showGraph(self, game, depth):
-		print(game.board.board)
 		if(self.isOnGoal(game.board,game.position)):
 			return True
-		print(depth)
-		if(depth < 2):
+		if(depth < 3):
 			# Draw current game states
 			# CODE FOR THAT HERE #
 			actions = self.stateActions(game.board, game.die, game.position)
@@ -83,6 +81,8 @@ class RollingDieAutomaton:
 		return board.isGoal(boardSpace(board, position[0]))
 
 	def beenTo(self,board,die,position):
+		if(self.isInBounds(board,position)):
+			
 		for state in board.board[position[0][0]][position[0][1]][1]:
 			if (state[1][0] == die and state[1][1] > position[1]):
 				return True
@@ -91,13 +91,11 @@ class RollingDieAutomaton:
 	# Returns all actions relevant from current state (read relevant = valid)
 	def stateActions(self,board, die, position):
 		actions = []
-		for dir in self.DIRECTIONS:
-			self.rollDie(die, position, dir)
-			print(self.isOnBarrier(board,position))
+		for di in self.DIRECTIONS:
+			self.rollDie(die, position, di)
 			if ((not self.beenTo(board,die,position)) and (not die.sixOnTop()) and self.isInBounds(board, position) and (not self.isOnBarrier(board, position))):
-				
-				actions.append(dir)
-			self.rollback(die, position, dir)
+				actions.append(di)
+			self.rollback(die, position, di)
 		return actions
 		
 	def reverse(self,position, direction):
