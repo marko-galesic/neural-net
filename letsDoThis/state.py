@@ -17,32 +17,17 @@ class State:
 		return self.validLocation(puzzle,state.x,state.y)
 
 	def validLocation(self,puzzle,x,y):
-		#print("____________________________")
-		#print([x,len(puzzle)])
-		#print(0 <= x < len(puzzle))
-		#print([y,len(puzzle[0])])
-		#print(0 <= y < len(puzzle[0]))
-#		print(len(puzzle[0]))
 		if(not 0<=x<len(puzzle)):
-		#	print("Fail x")
 			return False
 		if(not 0<=y<len(puzzle[0])):
-		#	print("Fail y")
 			return False
-		#print(puzzle[x][y])
-		#print("x " + str(x))
-		#print("y " + str(y))
 		if(not puzzle[x][y] == "*"):
-			#print(puzzle[4][4])
 			return True
-			#print("Fail *")
-		#print(puzzle[x][y])
 		return False
 		
 	def neighbors(self,puzzle):
-		#print("In Die")
-		#print(self.die)
-		#print([self.x,self.y])
+#		print("in neighbors")
+#		print([self.x,self.y])
 		dieVertical = self.die[0][:]
 		dieMiddle = self.die[1][:]
 		
@@ -76,27 +61,20 @@ class State:
 		dieWest[0][1] = dieWest[1][1]
 		x = self.x + 0
 		y = self.y + 0
-
-#		print(dieNorth)
-#		print(dieSouth)
-#		print(dieEast)
-#		print(dieWest)
 		
 		neighbors = [State(x,(y - 1), dieNorth, "W"),
 					State(x,(y + 1), dieSouth, "E"),
 					State((x + 1),self.y, dieEast, "S"),
 					State((x -1), self.y, dieWest, "N")]
 		
+		
 		s = 0
+#		print("neighbors")
 		while s < len(neighbors):
+#			print([neighbors[s].x,neighbors[s].y])
 			if(not self.valid(puzzle,neighbors[s])):
-#				print("Poping")
 				neighbors.pop(s)
 				s -= 1
+#				print("pop")
 			s += 1
-#		print("===================")
-#		for neighbor in neighbors:
-#			print(neighbor.die)
-#			print(neighbor.action)
-#		print("+++++++++++++++++++")
 		return neighbors

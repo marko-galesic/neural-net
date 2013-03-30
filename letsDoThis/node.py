@@ -12,11 +12,9 @@ class GameNode:
 		numVisitedNodes += 1
 		nextStates = []
 		for neighbor in self.state.neighbors(puzzle):
-			newDepth = self.depth + heuristic(neighbor) + 1
-#			print("+")
-			if(neighbor not in visited or newDepth < visited[neighbor]):
-#				print("HI " + str(neighbor.action))
-				nextStates.append(GameNode(neighbor,newDepth,self))
+			self.depth = self.depth + heuristic(neighbor) + 1
+			if(neighbor not in visited or self.depth < visited[neighbor]):
+				nextStates.append(GameNode(neighbor,self.depth,self))
 				numGeneratedNodes += 1
 		return [self.depth,numVisitedNodes,numGeneratedNodes,nextStates]
 
@@ -24,9 +22,6 @@ class GameNode:
 		path = []
 		currentNode = self
 		while currentNode != None:
-#			print(str(currentNode.state.action) + " => " + str([currentNode.state.x,currentNode.state.y]) + " : " + str(currentNode.state.die))		
-		#while currentNode != None:
 			path.append([currentNode,currentNode.state.action])
 			currentNode = currentNode.parent
-			#print(str(currentNode.state.action) + " => " + str([currentNode.state.x,currentNode.state.y]))
 		return path

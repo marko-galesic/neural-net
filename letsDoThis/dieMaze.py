@@ -41,12 +41,25 @@ def aStar(state):
 			if(len(nextStates) == 0 ):
 				print("No More States")
 				return False
-			nextNode = nextStates.pop(0)
+			smallestS = None
+			smallestI = None
+			s = 0
+			while len(nextStates) >s:
+				#print("++++++++++++++")
+				#print(nextStates[s].depth)
+				#print(smallestI)
+				if(smallestS == None):
+					smallestS = nextStates[s].depth
+					smallestI = s
+				elif(nextStates[s].depth < smallestS):
+					smallestS = nextStates[s].depth
+					smallestI = s
+				s+=1
+			nextNode = nextStates.pop(smallestI)
 			numVisitedNodes += 1
-#			print(numVisitedNodes)
+
 			notValid = haveVisited(nextNode.state,visited)
-		#print("-+ " + str(puzzle[nextNode.state.x][nextNode.state.y]) + "<=>" + str(state.die))
-		#print(puzzle[nextNode.state.x][nextNode.state.y] == "G")
+		
 		if( puzzle[nextNode.state.x][nextNode.state.y] == "G" and state.die[0][1] == 1):
 			foundGoal = True
 			nV = numVisitedNodes + 0
@@ -59,41 +72,16 @@ def aStar(state):
 			visited[nextNode.state] = visit
 			numVisitedNodes = ret[1]
 			numGeneratedNodes = ret[2]
-			#print("_-_-_-_-_-_-")
-			#print(len(ret[3]))
-			#print(len(nextStates))
-			nextStates.extend(ret[3])
 			
-			#i = 0
-			#while i < len(nextStates):
-			#	j = 0
-			#	while j < len(nextStates):
-			#		if(not i == j):
-			#			if(not (nextStates[i].state.x == nextStates[j].state.x and
-			#				nextStates[i].state.y == nextStates[j].state.y and
-			#				nextStates[i].state.action == nextStates[j].state.action)):
-			#					nextStates.pop(j)
-			#					j-=1
-			#		j+=1
-			#	i+=1
+			nextStates.extend(ret[3])
 			n+=1
-			#print(len(nextStates))
-#			if (n > 10001):
-#				print(len(nextStates))
-#				foundGoal = True
-#				return nextNode.getPathTaken()
 
 def haveVisited(state,visited):
 	for key in visited.keys():
-		#print("Have Visited")
-		#print([key.die,key.x,key.y])
-		#print("Current Visit")
-		#print([state.die,state.x,state.y])
 		if ((key.die == state.die) and 
 			(key.x == state.x) and
 			(key.y == state.y)):	
 			return True
-	#print("False")
 	return False
 
 def strightLineDistance(state):
@@ -110,6 +98,68 @@ def dieTurn(state):
 	if(state.die[0][1] == 1):
 		return 1
 	return 0
+
+seen = []
+
+def getDistancesBreathFirst(state):
+	#print("Starting breath first")
+	global puzzle,seen
+	seen = []
+	
+	depth =  breathFirst([[state.x,state.y],0],state.neighbors(puzzle))
+	print("breath depth " + str(depth))
+	return depth
+
+def breathFirst(state,neighbors):
+	global puzzle, seen
+#	print("=+=+=+")
+#	print(state)
+#	print(goal)
+#	print(seen)
+	#print("[][][]")
+#	if(state[1]  > 20):
+#		state += 1
+	#print("Is Goal")
+	#print(state[0] == goal)
+	if (state[0] == goal):
+		#print("FindValid State")
+		return state[1]
+	
+	for stateSeen in seen:
+		x = 0
+		while x < len(neighbors):
+	#		print(str(stateSeen) + " : " + str([neighbors[x].x,neighbors[x].y]) )
+			if(stateSeen[0] == [neighbors[x].x,neighbors[x].y]):
+	#			print("pop")
+				neighbors.pop(x)
+				x -= 1
+			x+=1
+	seen.append(state)
+	#print(len(neighbors))
+	for child in neighbors:
+		#print([child.x,child.y])
+		return breathFirst([[child.x,child.y],state[1] + 1],child.neighbors(puzzle))
+	return 0
+				
+		
+	
+
+def unSeen(v,distance):
+	x,y = v
+	return not valid(x,y) and type(distance[x][y]) == int
+
+def valid(x,y):
+	global puzzle
+	if(not 0<=x<len(puzzle)):
+		return False
+	if(not 0<=y<len(puzzle[0])):
+		return False
+	if(puzzle[x][y] == "*"):
+		return False
+	return True
+
+def nextStatesFilter(x,y):
+	return filter(unSeen,[(x+1,y),(x-1,y),(x,y+1),(x,y-1)])
 
 def results(startState):
 	global numGeneratedNodes
@@ -158,7 +208,7 @@ def main():
 	heuristic = manhattanDistance
 	results(startBloc)
 	print("Die Turn")
-	heuristic = dieTurn
+	heuristic = getDistancesBreathFirst
 	results(startFlip)
 
 if __name__ == "__main__":
