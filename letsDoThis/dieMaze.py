@@ -33,13 +33,14 @@ def aStar(state):
 	n = 0
 	while not foundGoal:
 		if (len(nextStates) == 0):
-			print("break")
+#			print("break")
 			break
 		nextNode = nextStates.pop(0)
 		notValid = haveVisited(nextNode.state,visited)
 		while (notValid):
 			if(len(nextStates) == 0 ):
 				print("No More States")
+				print("Visited " + str(len(visited)) + " generated " + str(numGeneratedNodes))
 				return False
 			smallestS = None
 			smallestI = None
@@ -63,7 +64,7 @@ def aStar(state):
 		if( puzzle[nextNode.state.x][nextNode.state.y] == "G" and state.die[0][1] == 1):
 			foundGoal = True
 			nV = numVisitedNodes + 0
-			print("win")
+#			print("win")
 			return nextNode.getPathTaken()
 		else:
 			nextNode.getPathTaken()
@@ -75,7 +76,6 @@ def aStar(state):
 			
 			nextStates.extend(ret[3])
 			n+=1
-
 def haveVisited(state,visited):
 	for key in visited.keys():
 		if ((key.die == state.die) and 
@@ -107,7 +107,7 @@ def getDistancesBreathFirst(state):
 	seen = []
 	
 	depth =  breathFirst([[state.x,state.y],0],state.neighbors(puzzle))
-	print("breath depth " + str(depth))
+#	print("breath depth " + str(depth))
 	return depth
 
 def breathFirst(state,neighbors):
