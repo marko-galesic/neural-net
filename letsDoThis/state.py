@@ -1,3 +1,4 @@
+#A state of the board
 class State:
 
 	x = 0
@@ -11,11 +12,13 @@ class State:
 		self.die = die
 		self.action = action
 
+	#Shows if it is a valid state
 	def valid(self,puzzle,state):
 		if(state.die[0][1] == 6):
 			return False
 		return self.validLocation(puzzle,state.x,state.y)
 
+	#Finds if the location is valid(On the board and not on a *)
 	def validLocation(self,puzzle,x,y):
 		if(not 0<=x<len(puzzle)):
 			return False
@@ -25,9 +28,8 @@ class State:
 			return True
 		return False
 		
+	#Gets the neighbors of the state
 	def neighbors(self,puzzle):
-#		print("in neighbors")
-#		print([self.x,self.y])
 		dieVertical = self.die[0][:]
 		dieMiddle = self.die[1][:]
 		
@@ -66,15 +68,10 @@ class State:
 					State(x,(y + 1), dieSouth, "E"),
 					State((x + 1),self.y, dieEast, "S"),
 					State((x -1), self.y, dieWest, "N")]
-		
-		
 		s = 0
-#		print("neighbors")
 		while s < len(neighbors):
-#			print([neighbors[s].x,neighbors[s].y])
 			if(not self.valid(puzzle,neighbors[s])):
 				neighbors.pop(s)
 				s -= 1
-#				print("pop")
 			s += 1
 		return neighbors

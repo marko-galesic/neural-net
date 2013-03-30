@@ -1,3 +1,4 @@
+#Node in the path to the Goal
 class GameNode:
 	state = None
 	depth = None
@@ -8,6 +9,7 @@ class GameNode:
 		self.depth = depth
 		self.parent = parent
 
+	#Gets the next states for this node
 	def getNewNextStates(self,puzzle,visited,numVisitedNodes,numGeneratedNodes,heuristic):
 		numVisitedNodes += 1
 		nextStates = []
@@ -18,6 +20,7 @@ class GameNode:
 				numGeneratedNodes += 1
 		return [self.depth,numVisitedNodes,numGeneratedNodes,nextStates]
 
+	# returns the path that was taken
 	def getPathTaken(self):
 		path = []
 		currentNode = self
